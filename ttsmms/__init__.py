@@ -132,21 +132,29 @@ class TTS:
         logging.info("uromanize")
         txt =  self.text_mapper.uromanize(txt, uroman_pl)
         return txt
-    def synthesis(self, txt, wav_path=None):
+
+    def synthesis(self, txt, wav_path=None, convert_to_pcm16=True):
         txt = self._use_uroman(txt)
         txt = self.text_mapper.filter_oov(txt)
         stn_tst = self.text_mapper.get_text(txt, self.hps)
         with torch.no_grad():
-            x_tst = stn_tst.unsqueeze(0)#.cuda()
-            x_tst_lengths = torch.LongTensor([stn_tst.size(0)])#.cuda()
+            x_tst = stn_tst.unsqueeze(0)  # .cuda()
+            x_tst_lengths = torch.LongTensor([stn_tst.size(0)])  # .cuda()
             hyp = self.net_g.infer(
                 x_tst, x_tst_lengths, noise_scale=.667,
                 noise_scale_w=0.8, length_scale=1.0
-            )[0][0,0].cpu().float().numpy()
-        if wav_path != None:
+            )[0][0, 0].cpu().float().numpy()
+        
+        if convert_to_pcm16:
+            # Convert to 16-bit PCM
+            hyp = (hyp * 32767).astype(np.int16)
+        
+        if wav_path:
             write(wav_path, self.hps.data.sampling_rate, hyp)
             return wav_path
-        return {"x":hyp,"sampling_rate":self.sampling_rate}
+        
+        return {"audio_bytes": hyp.tobytes(), "sampling_rate": self.sampling_rate}
+
 
 def generate():
     parser = argparse.ArgumentParser(description='TTS inference')
