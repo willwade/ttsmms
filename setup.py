@@ -11,7 +11,6 @@ requirements = [
     "numpy>=1.22.0",
     "phonemizer>=3.2.1",
     "torch>=2.3.1",
-    "torchvision>=0.18.0",
     "Unidecode>=1.3.7",
     "monotonic-align>=1.0.0",
 ]
