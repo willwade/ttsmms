@@ -22,6 +22,7 @@ from ttsmms.data_utils import TextAudioLoader, TextAudioCollate, TextAudioSpeake
 from ttsmms.models import SynthesizerTrn
 from scipy.io.wavfile import write
 from pathlib import Path
+import logging
 
 
 def download(lang, tgt_dir="./"):
@@ -34,15 +35,15 @@ def download(lang, tgt_dir="./"):
         return lang_dir
     from urllib.request import urlretrieve
     url = f"https://dl.fbaipublicfiles.com/mms/tts/{lang}.tar.gz"
-    print(f"downloading {lang} from {url}")
+    logging.info(f"downloading {lang} from {url}")
     urlretrieve(url, lang_fn)
     Path(lang_dir).mkdir(parents=True, exist_ok=True)
     import tarfile
     file = tarfile.open(lang_fn)
-    print(f"extract all {lang} to {lang_dir}")
+    logging.info(f"extract all {lang} to {lang_dir}")
     file.extractall(tgt_dir)
     file.close()
-    print("Done")
+    logging.info("Done")
     return lang_dir
 
 
