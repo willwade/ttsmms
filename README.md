@@ -1,4 +1,6 @@
-# ttsmms
+# py3-ttsmms
+
+(A fork of ttsmms by wannaphong)
 Text-to-speech with The Massively Multilingual Speech (MMS) project
 
 This project want to help you for use Text-to-speech model from MMS project in Python.
