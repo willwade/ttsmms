@@ -5,26 +5,26 @@ with open("README.md","r",encoding="utf-8-sig") as f:
     readme = f.read()
 
 requirements = [
-    "Cython",
-    "librosa",
-    "scipy",
-    "numpy",
-    "phonemizer",
-    "torch",
-    "torchvision",
-    "Unidecode",
-    "monotonic-align",
+    "Cython>=3.0.10",
+    "librosa>=0.10.0",
+    "scipy>=1.14.0",
+    "numpy>=1.22.0",
+    "phonemizer>=3.2.1",
+    "torch>=2.3.1",
+    "torchvision>=0.18.0",
+    "Unidecode>=1.3.7",
+    "monotonic-align>=1.0.0",
 ]
 
 setup(
-    name="ttsmms",
-    version="0.7",
+    name="py3-ttsmms",
+    version="0.8",
     description="Text-to-speech with The Massively Multilingual Speech (MMS) project",
     long_description=readme,
     long_description_content_type="text/markdown",
-    author="Wannaphong",
-    author_email="wannaphong@yahoo.com",
-    url="https://github.com/wannaphong/ttsmms",
+    author="willwade",
+    author_email="willwade@gmail.com",
+    url="https://github.com/willwade/ttsmms",
     packages=find_packages(),
     test_suite="tests",
     python_requires=">=3.6",
@@ -51,6 +51,6 @@ setup(
         "Topic :: Text Processing :: Linguistic",
     ],
     project_urls={
-        "Source": "https://github.com/wannaphong/ttsmms",
+        "Source": "https://github.com/willwade/ttsmms",
     },
 )
