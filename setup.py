@@ -35,7 +35,7 @@ setup(
     install_requires=requirements,
     license="MIT License",
     zip_safe=False,
-    keywords=[
+    dynamic=[
         "tts",
         "NLP",
     ],
