@@ -7,11 +7,12 @@ on:
 
 jobs:
   build_wheels:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        platform: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [3.10, 3.11]
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: ${{ matrix.python-version }}
 
       - name: Install cibuildwheel
         run: pip install cibuildwheel
@@ -32,3 +33,53 @@ jobs:
         with:
           name: wheelhouse
           path: wheelhouse/
+
+  test_wheels:
+    runs-on: ubuntu-latest
+    needs: build_wheels
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11]
+
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: wheelhouse
+          path: wheelhouse/
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest
+          pip install wheelhouse/*.whl
+
+      - name: Run tests
+        run: pytest
+
+  publish_wheels:
+    runs-on: ubuntu-latest
+    needs: test_wheels
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: wheelhouse
+          path: wheelhouse/
+
+      - name: Publish package to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
