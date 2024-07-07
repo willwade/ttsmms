@@ -50,19 +50,19 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-ubuntu-latest-${{ matrix.python-version }}
-          path: wheelhouse/ubuntu-latest/${{ matrix.python-version }}
+          path: wheelhouse
 
       - name: Download wheels for windows
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-windows-latest-${{ matrix.python-version }}
-          path: wheelhouse/windows-latest/${{ matrix.python-version }}
+          path: wheelhouse
 
       - name: Download wheels for macos
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-macos-latest-${{ matrix.python-version }}
-          path: wheelhouse/macos-latest/${{ matrix.python-version }}
+          path: wheelhouse
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -105,37 +105,37 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-ubuntu-latest-3.10
-          path: wheelhouse/ubuntu-latest/3.10
+          path: wheelhouse
 
       - name: Download wheels for windows
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-windows-latest-3.10
-          path: wheelhouse/windows-latest/3.10
+          path: wheelhouse
 
       - name: Download wheels for macos
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-macos-latest-3.10
-          path: wheelhouse/macos-latest/3.10
+          path: wheelhouse
 
       - name: Download wheels for linux
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-ubuntu-latest-3.11
-          path: wheelhouse/ubuntu-latest/3.11
+          path: wheelhouse
 
       - name: Download wheels for windows
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-windows-latest-3.11
-          path: wheelhouse/windows-latest/3.11
+          path: wheelhouse
 
       - name: Download wheels for macos
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-macos-latest-3.11
-          path: wheelhouse/macos-latest/3.11
+          path: wheelhouse
 
       - name: Publish package to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
