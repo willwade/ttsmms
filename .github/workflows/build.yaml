@@ -72,11 +72,14 @@ jobs:
       - name: Install test dependencies
         run: |
           pip install pytest
-          pip install wheelhouse/*/*/*.whl || true  # Allow failing if some wheels are not compatible
-          pip install MarkupSafe  # Ensure MarkupSafe is installed from PyPI
+          pip install MarkupSafe
+          pip install wheelhouse/*/*/*.whl
+
+      - name: List files in the working directory
+        run: ls -R
 
       - name: Run tests
-        run: pytest
+        run: pytest tests/
 
   publish_wheels:
     runs-on: ubuntu-latest
