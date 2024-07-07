@@ -49,6 +49,8 @@ jobs:
         python-version: ['3.10', '3.11']
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -88,9 +90,6 @@ jobs:
       - name: List files in the working directory
         run: ls -R
 
-      - name: Where am i?
-        run: pwd
-
       - name: Run tests
         run: pytest tests/
 
@@ -108,8 +107,6 @@ jobs:
 
       - name: List available artifacts
         run: |
-          echo "All ls:"
-          ls -1R .
           echo "Available artifacts:"
           ls -1 /home/runner/work/ttsmms/ttsmms
 
