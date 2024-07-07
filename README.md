@@ -1,9 +1,9 @@
 # py3-ttsmms
 
 (A fork of ttsmms by wannaphong)
-Text-to-speech with The Massively Multilingual Speech (MMS) project
+Text-to-speech with The Massively Multilingual Speech (MMS) project from Meta. 
 
-This project want to help you for use Text-to-speech model from MMS project in Python.
+This project want to help you for use Text-to-speech model from MMS project in Python. We aim to keep functioanlity minimal. Other projects such as py3-ttswrapper will provide more features.
 
 Support 1,107 Languages! (See support_list.txt)
 
@@ -16,12 +16,15 @@ Support 1,107 Languages! (See support_list.txt)
 
 ## Install
 
-> pip install ttsmms
+> pip install py3-ttsmms
 
+** Warning; There are a LOT of dependencies. If you already have Torch or PyTorch installed, you may need to uninstall it and reinstall it with the correct version. **
+
+**NB: We use the same method names as ttsmms, but the code is not compatible.**
 
 ## Usage
 
-First, you need to download the model by
+First, you need to download the model by yourself or use the code below. Note these are ISO 639-1 language codes. Youc an see the full list in support_list.txt.
 
 ```python
 from ttsmms import download
@@ -29,21 +32,20 @@ from ttsmms import download
 dir_path = download("eng","./data") # lang_code, dir for save model
 ```
 
-or download file by yourself
+or download file by yourself eg:
 
-**Linux/Mac**
 
-1. download
+1. Download the language model file. Replace "lang_code" with the language code you want to download. You can see the full list in support_list.txt kur for Kurdish, eng for English, etc.
 
 > curl https://dl.fbaipublicfiles.com/mms/tts/lang_code.tar.gz --output lang_code.tar.gz
 
 2. extract a tar ball archive.
 
-**Linux/Mac**
+3. create a directory for save model
 
 > mkdir -p data && tar -xzf lang_code.tar.gz -C data/
 
-and use code in python :D
+### Synthesis
 
 ```python
 from ttsmms import TTS
