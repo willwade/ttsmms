@@ -27,14 +27,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install wheel
 
-      - name: Build wheels
-        run: pip wheel . --wheel-dir wheelhouse
+      - name: Build wheel for the library
+        run: python setup.py bdist_wheel -d wheelhouse
 
       - name: List wheelhouse contents before uploading
         run: ls -R wheelhouse
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: wheelhouse-${{ matrix.os }}-${{ matrix.python-version }}
           path: wheelhouse/
@@ -83,16 +83,7 @@ jobs:
       - name: Install test dependencies
         run: |
           pip install pytest
-          pip install MarkupSafe
-          for wheel in wheelhouse/*/*/*.whl; do
-            package_name=$(basename "$wheel" | cut -d'-' -f1)
-            if ! python -c "import $package_name" &> /dev/null; then
-              echo "Installing $wheel"
-              pip install "$wheel" || pip install "$package_name"
-            else
-              echo "$package_name is already installed"
-            fi
-          done
+          pip install wheelhouse/*.whl
 
       - name: List files in the working directory
         run: ls -R
