@@ -31,7 +31,7 @@ jobs:
         run: pip wheel . --wheel-dir wheelhouse
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: wheelhouse-${{ matrix.os }}-${{ matrix.python-version }}
           path: wheelhouse/
@@ -73,7 +73,15 @@ jobs:
         run: |
           pip install pytest
           pip install MarkupSafe
-          pip install wheelhouse/*/*/*.whl
+          for wheel in wheelhouse/*/*/*.whl; do
+            package_name=$(basename "$wheel" | cut -d'-' -f1)
+            if ! python -c "import $package_name" &> /dev/null; then
+              echo "Installing $wheel"
+              pip install "$wheel" || pip install "$package_name"
+            else
+              echo "$package_name is already installed"
+            fi
+          done
 
       - name: List files in the working directory
         run: ls -R
