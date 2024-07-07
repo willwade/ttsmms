@@ -47,7 +47,8 @@ jobs:
 
     steps:
       - name: List available artifacts
-        run: echo "Available artifacts: $(ls -1 /home/runner/work/ttsmms/ttsmms)"
+        run: |
+         echo "Available artifacts: $(ls -1 /home/runner/work/ttsmms/ttsmms)"
 
       - name: Download wheels for linux
         uses: actions/download-artifact@v3
