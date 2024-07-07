@@ -105,6 +105,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Create dist directory
+        run: mkdir -p dist
+
       - name: List available artifacts
         run: |
           echo "Available artifacts:"
@@ -114,44 +117,44 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-ubuntu-latest-3.10
-          path: wheelhouse
+          path: dist
 
       - name: Download wheels for windows
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-windows-latest-3.10
-          path: wheelhouse
+          path: dist
 
       - name: Download wheels for macos
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-macos-latest-3.10
-          path: wheelhouse
+          path: dist
 
       - name: Download wheels for linux
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-ubuntu-latest-3.11
-          path: wheelhouse
+          path: dist
 
       - name: Download wheels for windows
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-windows-latest-3.11
-          path: wheelhouse
+          path: dist
 
       - name: Download wheels for macos
         uses: actions/download-artifact@v3
         with:
           name: wheelhouse-macos-latest-3.11
-          path: wheelhouse
+          path: dist
 
-      - name: List contents of wheelhouse after download
-        run: ls -R wheelhouse
+      - name: List contents of dist after download
+        run: ls -R dist
 
       - name: Publish package to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
+          repository-url: https://test.pypi.org/legacy/
