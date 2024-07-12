@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py3-ttsmms"
-version = "0.8.4"
+version = "0.8.25"
 description = "Text-to-speech with The Massively Multilingual Speech (MMS) project"
 authors = [{name = "willwade", email = "willwade@gmail.com"}]
 readme = "README.md"
